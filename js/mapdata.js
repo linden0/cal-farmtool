@@ -38,7 +38,7 @@ var simplemaps_statemap_mapdata={
     hide_eastern_labels: false,
    
 		//Zoom settings
-		manual_zoom: "yes",
+		manual_zoom: "no",
     back_image: "no",
     arrow_box: "no",
     navigation_size: "40",

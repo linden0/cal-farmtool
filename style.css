@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans|Pacifico|Source+Code+Pro');
+        /* FontAwesome cdn fonts */
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+body {
+  background-color: #48A9A6;
+
+}
+
+div.solid {
+    border-style: solid;
+    padding: 20px;
+    border-width: 4px;
+    border-color: #124E78;
+}
+
+h2 {
+    text-align: center;
+}
+
+p {
+    color:black;
+    width:1225px;
+    padding-left: 100px;
+    padding-right:100px;
+    font-family: 'Arvo', Georgia, Times, serif;
+}
+nav {
+    width:1225px;
+    font-size: 20pt;
+    padding-left: 100px;
+    padding-right:100px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#container {
+	width:1440px;
+	background-color: #F0F0C9;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#header {
+    font-family: 'Arvo', Georgia, Times, serif;
+	color:white;
+	text-align: center;
+	background-color: #124E78;
+    font-size: 20pt;
+    height:80px;
+}
+
+#content {
+    margin-left: auto;
+    margin-right: auto;
+	width:1380px;
+    height:880px;
+	background-color: #F0F0C9;
+	padding:20px;
+}
+
+#content2 {
+    clear: both;
+    margin-left: auto;
+    margin-right: auto;
+	width:1380px;
+	background-color: #F0F0C9;
+	padding:20px;
+}
+
+#map {
+	float: left;
+}
+
+
+
+#curve_chart {
+    float:right;
+	width:500px;
+	height:800px;
+	background-color: white;
+}
+
+#calculator{
+  font-family: 'Arvo', Georgia, Times, serif;
+	text-align: center;
+	clear:both;
+	width:auto;
+	background-color: #F0F0C9;
+}
+
+#instructions1 {
+  font-family: 'Arvo', Georgia, Times, serif;
+  clear:both;
+}
+
+ #allcomments {
+            width: 90%;
+            margin: 1em 0 4em 1em;
+            padding: 1%;
+            border: solid 1px gray;
+            border-radius: 3px;
+            box-shadow: 2px 2px 2px silver;
+        }
+
+ul#pastcomments {
+            list-style-type: none;
+        }
+
+ul#pastcomments li:before {
+            font-family: FontAwesome;
+            content: "\f086";
+            font-size: 24pt;
+            color: gray;
+            margin-left: -42px;
+            padding-right: 10px;
+            position: relative;
+            top: 8px;
+        }
+
+ul#pastcomments li {
+            margin: 0 0 2em 0;
+            padding: 10px;
+        }
+
+ul#pastcomments li span {
+            font-size: 80%;
+            color: gray;
+            font-style: italic;
+        }
+
+form#newcomment textarea {
+            height: 72px;
+        }
+
+form#newcomment label {
+            display: inline-block;
+            margin: 1em 0 0 0;
+        }
+
+form#newcomment textarea,
+form#newcomment input[type="text"] {
+            margin-top: 0;
+        }
+#footer {
+  font-family: 'Arvo', Georgia, Times, serif;
+	clear:both;
+  color:white;
+	background-color: #124E78;
+  height:40px;
+
+}

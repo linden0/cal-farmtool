@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Predict water available in each Californian hydrologic region, water required to sustain  crops, value of crops">
+
+		<title>California Water and Crop Tool</title>
+		<link type="text/css" rel="stylesheet" href="style.css" />
+
+        <!-- calculate crop data -->
+		<script type="text/javascript" src="js/datatable.js" defer></script>
+
+
+		<!-- import interactive map, gcharts, and firebase -->
+		<script type="text/javascript" src="js/mapdata.js"></script>
+		<script type="text/javascript" src="js/statemap.js"></script>
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
+    	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-database.js"></script>
+
+		<!-- show chart data on county click -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/cheerio/0.22.0/index.min.js"></script>
+		<script type="text/javascript" src="js/on-county-click.js" defer></script>
+
+		<script type="text/javascript" src="js/comment-logic.js" defer></script>
+
+	</head>
+
+	<body>
+		<div id="container">
+
+			<div id = "header">
+				<h1>California Water and Crop Tool</h1>
+			</div>
+			<nav>
+				<a href="#content">Water Prediction Tool</a> |
+				<a href="#content2">Crop Water Tool</a>
+			</nav>
+			<p style="font-size:20px;">This website attempts to predict the amount of water available in each Californian hydrologic region, amount of water required to sustain certain crops, and value of certain crops to help farmers select cost effective crops to plant. To use the map feature below, select your county to display water trends for the nearest major water resevoirs. Regional water data comes from <a href="https://cdec.water.ca.gov/reportapp/javareports?name=STORAGEW">https://cdec.water.ca.gov/reportapp/javareports?name=STORAGEW</a>.</p>
+
+			<div class = "solid" id="content">
+				<h2>Water Prediction Tool</h2>
+				<div id = "map"></div>
+				<div id="curve_chart" style="width: 500px; height: 800px"></div>
+
+			</div>
+			<div class = "solid" id="content2">
+				<h2>Crop Data Tool</h2>
+
+				<div id="instructions1">
+					<p style="font-size:20px;">To use the crop data tool below, enter an amount of land to see the amount of water different crops need and the estimated value of those crops.</p>
+				</div>
+				<div id="calculator"><br><br>
+					<form onsubmit="return false">
+
+
+						<label>Enter Land Amount (acres): </label>
+						<input type="text" id="land_amount" name="land_amount" ><br>
+						<input type="submit" onclick="showInput();"><br>
+						<span id='display'></span>
+						<table style="visibility:hidden" id='crop_display' class = "center">
+							<tr>
+								<th>Crop</th>
+								<th>Water Required (acre-feet)<br><a href="https://www.mdpi.com/2072-4292/11/15/1782">source</a></th>
+								<th>Cost of Water<br><a href="https://www.farmprogress.com/water-70-24-million-acre-foot#:~:text=California%20farmers%20pay%20an%20average%20of%20%2470%20per,the%20value%20of%20that%20acre-foot%20is%20%242.4%20million.">source</a></th>
+								<th>Estimated Value (in thousands)<br><a href="https://www.cdfa.ca.gov/exec/county/CountyCropReports.html">source</a></th>
+							</tr>
+
+							<tr>
+								<td>Almonds</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Grapes</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Alfalfa</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Rice</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Walnuts</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Winter Wheat</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Cotton</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Pistachios</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Corn</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>Oranges</td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</table>
+
+
+
+					</form>
+				</div>
+			</div>
+			<br><br>
+
+			<br><br>
+
+
+
+			<div id="allcomments">
+			        <h3>Comments</h3>
+			        <!-- We will show past comments in the list below-->
+			        <ul id="pastcomments"></ul>
+			        <!-- This is the form for entering a new comment -->
+			        <form id="newcomment">
+			            <label for="tbName">First Name or Initials</label>
+			            <br>
+			            <input id="tbName" type="text" maxlength="20" required>
+			            <br>
+			            <label for="txComment">Your Comment / Question</label>
+			            <br>
+			            <textarea id="txComment" maxlength="4096" required style="width:96%"></textarea>
+			            <br>
+			            <input type="submit" id="btnSubmitComment" value="Submit Comment">
+			        </form>
+			</div>
+
+
+
+
+		<div id = "footer">
+				Copyright &copy; 2021 Linden Wang
+		</div>
+
+		</div>
+
+	</body>
+
+</html>

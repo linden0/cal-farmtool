@@ -6,9 +6,10 @@ const cors = require('cors');
 const app = express();
 
 const url = 'https://cdec.water.ca.gov/reportapp/javareports?name=STORAGEW';
+const PORT = process.env.PORT || 5000
 
-app.listen(8080, function() {
-    console.log('listening on port 8080');
+app.listen(PORT, () => {
+    console.log(`listening on ${PORT}`);
 })
 
 app.get('/', (req, res) => {

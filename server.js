@@ -47,7 +47,7 @@ app.get('/api', async (req, res) => {
             value = JSON.parse(JSON.stringify(template)); //deepcopy of template
             //push yearly water data to copy
             for (let col=startCol; col<numCols; col ++) {
-                let acreFeet = $(tds[col]).text()
+                let acreFeet = parseInt($(tds[col]).text().replace(',',''))
                 value[dataTableRow][1] = acreFeet
                 dataTableRow += 1
             }

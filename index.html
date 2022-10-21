@@ -1,184 +1,90 @@
 <!DOCTYPE html>
-
 <html>
-	<head>
-		<meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="Predict water available in each Californian hydrologic region, water required to sustain  crops, value of crops">
 
 		<title>California Water and Crop Tool</title>
-		<link type="text/css" rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="content-wrapper">
+      <header>
+        <div>
+          <h1 class="main-title">California Drought Management Tool</h1>
+        </div>
+      </header>
 
-        <!-- calculate crop data -->
-		<script type="text/javascript" src="js/datatable.js" defer></script>
+      <!-- water tool -->
+      <section>
+        <div>
+          <h1>Water Tool</h1>
+        </div>
+        <div>
+          <p class="section-description">This tool displays local hydrologic resevoir trends based on the California Data Exchange found <a href="https://cdec.water.ca.gov/reportapp/javareports?name=STORAGEW">here</a>. To begin, find and select your California county.</p>
+        </div>
+        <div class="map-wrapper">
+          <div id="react_container"></div>
+          <div id="chart"></div>
+        </div>
+      </section>
 
+      <!-- crop tool -->
+      <section>
+        <div>
+          <h1>Crop Prediction Tool</h1>
+        </div>
+        <div>
+          <p class="section-description">Enter a land amount in acres to see the water consumption, water cost, and value of California's most impactful crops.</p>
+        </div>
 
-		<!-- import interactive map, gcharts, and firebase -->
-		<script type="text/javascript" src="js/mapdata.js"></script>
-		<script type="text/javascript" src="js/statemap.js"></script>
-		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
-    	<script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-database.js"></script>
+        <div>
+          <input id="land-amount">
+          <button class="crop-button" onclick="populateTable()">Submit</button>
+        </div>
+        <div id="table-wrapper"></div>
+      </section>
+    </div>
 
-		<!-- show chart data on county click -->
-		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/cheerio/0.22.0/index.min.js"></script>
-		<script type="text/javascript" src="js/on-county-click.js" defer></script>
+    <!-- comment section -->
+    <section class="comment-wrapper">
+      <div class="comments">
+        <h1>Comments</h1>
+        <ul id="past-comments"></ul>
+        <form id="new-comment">
+          <label class="comment-title">First Name or Initials</label>
+          <input id="name-input" maxlength="20" required>
+          <label class="comment-title">Your Comment</label>
+          <textarea id="comment-input" maxlength="4096"></textarea>
+          <button type="submit" id="submit-comment">Post</button>
 
-		<script type="text/javascript" src="js/comment-logic.js" defer></script>
+        </form>
+      </div>
+    </section>
 
-	</head>
+    <!-- import react -->
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
 
-	<body>
-		<div id="container">
+    <!-- import gcharts, firebase, jquery -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-database.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-			<div id = "header">
-				<h1>California Water and Crop Tool</h1>
-			</div>
-			<nav>
-				<a href="#content">Water Prediction Tool</a> |
-				<a href="#content2">Crop Water Tool</a>
-			</nav>
-			<p style="font-size:20px;">This website attempts to predict the amount of water available in each Californian hydrologic region, amount of water required to sustain certain crops, and value of certain crops to help farmers select cost effective crops to plant. To use the map feature below, select your county to display water trends for the nearest major water resevoirs. Regional water data comes from <a href="https://cdec.water.ca.gov/reportapp/javareports?name=STORAGEW">https://cdec.water.ca.gov/reportapp/javareports?name=STORAGEW</a>.</p>
+    <!-- import style -->
+    <link type="text/css" rel="stylesheet" href="style.css" />
 
-			<div class = "solid" id="content">
-				<h2>Water Prediction Tool</h2>
-				<div id = "map"></div>
-				<div id="curve_chart" style="width: 500px; height: 800px"></div>
+    <!-- import map -->
+    <script src="mapdata.js"></script>
+    <script src="statemap.js"></script>
 
-			</div>
-			<div class = "solid" id="content2">
-				<h2>Crop Data Tool</h2>
-
-				<div id="instructions1">
-					<p style="font-size:20px;">To use the crop data tool below, enter an amount of land to see the amount of water different crops need and the estimated value of those crops.</p>
-				</div>
-				<div id="calculator"><br><br>
-					<form onsubmit="return false">
-
-
-						<label>Enter Land Amount (acres): </label>
-						<input type="text" id="land_amount" name="land_amount" ><br>
-						<input type="submit" onclick="showInput();"><br>
-						<span id='display'></span>
-						<table style="visibility:hidden" id='crop_display' class = "center">
-							<tr>
-								<th>Crop</th>
-								<th>Water Required (acre-feet)<br><a href="https://www.mdpi.com/2072-4292/11/15/1782">source</a></th>
-								<th>Cost of Water<br><a href="https://www.farmprogress.com/water-70-24-million-acre-foot#:~:text=California%20farmers%20pay%20an%20average%20of%20%2470%20per,the%20value%20of%20that%20acre-foot%20is%20%242.4%20million.">source</a></th>
-								<th>Estimated Value (in thousands)<br><a href="https://www.cdfa.ca.gov/exec/county/CountyCropReports.html">source</a></th>
-							</tr>
-
-							<tr>
-								<td>Almonds</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Grapes</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Alfalfa</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Rice</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Walnuts</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Winter Wheat</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Cotton</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Pistachios</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Corn</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td>Oranges</td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</table>
-
-
-
-					</form>
-				</div>
-			</div>
-			<br><br>
-
-			<br><br>
-
-
-
-			<div id="allcomments">
-			        <h3>Comments</h3>
-			        <!-- We will show past comments in the list below-->
-			        <ul id="pastcomments"></ul>
-			        <!-- This is the form for entering a new comment -->
-			        <form id="newcomment">
-			            <label for="tbName">First Name or Initials</label>
-			            <br>
-			            <input id="tbName" type="text" maxlength="20" required>
-			            <br>
-			            <label for="txComment">Your Comment / Question</label>
-			            <br>
-			            <textarea id="txComment" maxlength="4096" required style="width:96%"></textarea>
-			            <br>
-			            <input type="submit" id="btnSubmitComment" value="Submit Comment">
-			        </form>
-			</div>
-
-
-
-
-		<div id = "footer">
-				Copyright &copy; 2021 Linden Wang
-		</div>
-
-		</div>
-
-	</body>
-
+    <!-- render react components and logic scripts -->
+    <script src="Map.js"></script>
+    <script src="Table.js"></script>
+    <script src="on-county-click.js"></script>
+    <script src="datatable.js"></script>
+    <script src="comment-logic.js"></script>
+  </body>
+     
 </html>

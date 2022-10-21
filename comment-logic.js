@@ -10,14 +10,14 @@ var config = {
 firebase.initializeApp(config);
 const rootRef = firebase.database().ref();
 const commentsRef = rootRef.child('comments');
-document.getElementById("btnSubmitComment").addEventListener("click", function () {
+document.getElementById("submit-comment").addEventListener("click", function () {
     //Replace line breaks in comment with br tags.
-    var newcomment = document.getElementById('txComment').value.replace(/\n/g, "<br>");
+    var newcomment = document.getElementById('comment-input').value.replace(/\n/g, "<br>");
     //Define a new, keyed post.
     var newPostRef = commentsRef.push();
     //Fill tne new keyed post with data
     newPostRef.set({
-        name: document.getElementById('tbName').value.trim(),
+        name: document.getElementById('name-input').value.trim(),
         comment: newcomment.trim(),
         frompage: location.pathname,
         when: firebase.database.ServerValue.TIMESTAMP
@@ -25,7 +25,7 @@ document.getElementById("btnSubmitComment").addEventListener("click", function (
 });
 
 function showpastcomments() {
-    var showat = document.getElementById('pastcomments');
+    var showat = document.getElementById('past-comments');
     //Get comments whose from page equals this page's pathname.
     var commentsRef = firebase.database().ref('comments/').orderByChild('frompage').equalTo(location.pathname);
     commentsRef.once('value', function (snapshot) {
@@ -35,8 +35,8 @@ function showpastcomments() {
             var comment = itemData.comment;
             var name = itemData.name;
             var when = new Date(itemData.when).toLocaleDateString("en-us");
-            showat.innerHTML += "<li>" + comment + "<span> -- " + name + " (" + when +
-                ")</span></li>";
+            showat.innerHTML += "<li class='comment'><span class='commenter'>" + name + 
+                "</span><br>" + comment + "</li>";
         })
     })
 }

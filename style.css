@@ -1,160 +1,182 @@
-@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Open+Sans|Pacifico|Source+Code+Pro');
-        /* FontAwesome cdn fonts */
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Source+Sans+Pro&display=swap');
+
 
 body {
-  background-color: #48A9A6;
-
+  margin:0;
+}
+.content-wrapper {
+  margin-left: 15%;
+  margin-right: 15%;
+  text-align: left;
+  /* font-family: 'Raleway', sans-serif; */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-div.solid {
-    border-style: solid;
-    padding: 20px;
-    border-width: 4px;
-    border-color: #124E78;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-h2 {
-    text-align: center;
+.main-title {
+  font-size: 45px;
+  text-align: center;
 }
 
-p {
-    color:black;
-    width:1225px;
-    padding-left: 100px;
-    padding-right:100px;
-    font-family: 'Arvo', Georgia, Times, serif;
-}
-nav {
-    width:1225px;
-    font-size: 20pt;
-    padding-left: 100px;
-    padding-right:100px;
+.section-description {
+  font-size: 18px;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
-table, th, td {
-  border: 1px solid black;
+a:link { text-decoration: none; }
+
+.map-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+#chart {
+  width: 50%;
+  height: 100%;
+}
+
+#react_container {
+  width: 50%;
+}
+
+@media ( max-width: 600px) {
+  .map-wrapper {
+    flex-direction: column;
+  }
+}
+
+#land-amount {
+  padding: 0 15px;
+  width: 40%;
+  height: 50px;
+  border: 2px solid #d4dbe0;
+  background-color: #fff;
+  border-radius: 0 !important;
+  color: rgb(82, 77, 77);
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+}
+.crop-button {
+  background-color: #2a2c2a;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+th, td {
+  border: 2px solid #d4dbe0;
+  padding: 8px;
+}
+.crop-table {
+  margin-top: 20px;
+  table-layout: fixed;
+  width: 100%;
   border-collapse: collapse;
+  
 }
 
-.center {
-	margin-left: auto;
-	margin-right: auto;
+.comment-title {
+  font-family: 'Raleway', sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  display: block;;
 }
 
-#container {
-	width:1440px;
-	background-color: #F0F0C9;
-	margin-left: auto;
-	margin-right: auto;
+#name-input {
+  padding: 5px 15px;
+  width: 25%;
+  height: 25px;
+  border: 2px solid #d4dbe0;
+  background-color: #fff;
+  border-radius: 0 !important;
+  color: rgb(82, 77, 77);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-#header {
-    font-family: 'Arvo', Georgia, Times, serif;
-	color:white;
-	text-align: center;
-	background-color: #124E78;
-    font-size: 20pt;
-    height:80px;
+#comment-input {
+  padding: 5px 15px;
+  width: 40%;
+  height: 70px;
+  border: 2px solid #d4dbe0;
+  background-color: #fff;
+  border-radius: 0 !important;
+  color: rgb(82, 77, 77);
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: block;
 }
 
-#content {
-    margin-left: auto;
-    margin-right: auto;
-	width:1380px;
-    height:880px;
-	background-color: #F0F0C9;
-	padding:20px;
+#submit-comment {
+  display: block;
+  background-color: #2a2c2a;
+  border: none;
+  color: white;
+  padding: 13px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 17px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
-#content2 {
-    clear: both;
-    margin-left: auto;
-    margin-right: auto;
-	width:1380px;
-	background-color: #F0F0C9;
-	padding:20px;
+.comments {
+  font-family: 'Raleway', sans-serif;
+  margin-left: 15%;
+  border: 2px solid #d4dbe0;
+  /* padding-left: 10px; */
 }
 
-#map {
-	float: left;
+#past-comments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 15px;
+  width: 40%;
+  border-radius: 10px;
+}
+.commenter {
+  font-weight: 680;
+  color:#468189;
+  font-size: 15px;
+  }
+.comment {
+  margin-bottom: 12px;
+  width: 40%;
 }
 
-
-
-#curve_chart {
-    float:right;
-	width:500px;
-	height:800px;
-	background-color: white;
+.comments h1 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;  font-weight: bold;
 }
-
-#calculator{
-  font-family: 'Arvo', Georgia, Times, serif;
-	text-align: center;
-	clear:both;
-	width:auto;
-	background-color: #F0F0C9;
+.comment-wrapper {
+  margin-top: 25px;
+  background-color: #d4dbe0;
+  font-weight: bold;
+  margin-top: 20px;
+  width: 100%;
 }
-
-#instructions1 {
-  font-family: 'Arvo', Georgia, Times, serif;
-  clear:both;
-}
-
- #allcomments {
-            width: 90%;
-            margin: 1em 0 4em 1em;
-            padding: 1%;
-            border: solid 1px gray;
-            border-radius: 3px;
-            box-shadow: 2px 2px 2px silver;
-        }
-
-ul#pastcomments {
-            list-style-type: none;
-        }
-
-ul#pastcomments li:before {
-            font-family: FontAwesome;
-            content: "\f086";
-            font-size: 24pt;
-            color: gray;
-            margin-left: -42px;
-            padding-right: 10px;
-            position: relative;
-            top: 8px;
-        }
-
-ul#pastcomments li {
-            margin: 0 0 2em 0;
-            padding: 10px;
-        }
-
-ul#pastcomments li span {
-            font-size: 80%;
-            color: gray;
-            font-style: italic;
-        }
-
-form#newcomment textarea {
-            height: 72px;
-        }
-
-form#newcomment label {
-            display: inline-block;
-            margin: 1em 0 0 0;
-        }
-
-form#newcomment textarea,
-form#newcomment input[type="text"] {
-            margin-top: 0;
-        }
-#footer {
-  font-family: 'Arvo', Georgia, Times, serif;
-	clear:both;
-  color:white;
-	background-color: #124E78;
-  height:40px;
-
+#new-comment {
+  margin-top: 20px;
 }

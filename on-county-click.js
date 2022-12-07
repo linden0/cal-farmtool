@@ -13,7 +13,7 @@ const resevoirToCounties = {
 }
 let resevoirToDataTable = {}
 
-const apiURI = 'https://cdec-reservoir.herokuapp.com/api'
+const apiURI = 'https://cal-farmtool-reservoir.fly.dev/api'
 
 async function fetchWaterData() {
     data = await $.ajax({type:'GET', url:apiURI})
@@ -21,7 +21,6 @@ async function fetchWaterData() {
 }
 
 fetchWaterData()
-
 simplemaps_statemap.hooks.click_state = function(id){
     document.getElementById('chart').style.display = 'block';
 
